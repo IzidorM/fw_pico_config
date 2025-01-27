@@ -22,7 +22,9 @@ should be defined by the lower layer MTU.
 
    
 ### Header
-    
+
+```
+
 |-------------------+---------------------------------+-----------------------------------|
 | 7 (bit)           | 6 (bit)                         | 5:0 (bits)                        |
 |-------------------+---------------------------------+-----------------------------------|
@@ -35,6 +37,7 @@ should be defined by the lower layer MTU.
 |                   | 1 - ack                         |                                   |
 |-------------------+---------------------------------+-----------------------------------|
 
+```
 
 ### Payload 
 
@@ -47,7 +50,7 @@ the IDs that will be used. If there is no handler for specific ID, the
 package is dropped.
 
 
-** Example of a Pico Config Message Exchange
+## Example of a Pico Config Message Exchange
 
 Every Pico config transfer begins with a request packet. If the
 response flag in the request header is set, the receiver must reply
@@ -63,7 +66,7 @@ back the nack response packet, where the exact error code descriping
 the error can be placed in the payload. For more detailes see the
 example section.
 
-*** Example of the packet structure in request and response packets
+### Example of the packet structure in request and response packets
 
 Sending a packet with ID = 0x8 and a 3-byte payload: 0xaa 0xbb 0xcc,
 with response enabled.
@@ -76,7 +79,7 @@ with response enabled.
 
 _NOTE: The response payload (rsp_payload) is optional._
 
-*Example of Pico Config Packet Usage in an Application*
+### Example of Pico Config Packet Usage in an Application
 
 An application wants to query the receiving system for the software
 (firmware) version running there. The developers have decided that the
@@ -87,9 +90,9 @@ format.
 
 - *Example Usage*:
   - The transmitter sends a request with ID 0x1 and an empty payload:
-    - /TX (Transmit)*: ['0xc1' (request, enable response, ID=0x1)] 
+    - TX (Transmit)*: ['0xc1' (request, enable response, ID=0x1)] 
   - The receiver responds with the software version:
-    - /RX (Receive)*: ['0x41' (response flag, ACK, ID=0x1), 0x01, 0x00, 0x00, 0x00] (e.g., version 1.0.0.0)
+    - RX (Receive)*: ['0x41' (response flag, ACK, ID=0x1), 0x01, 0x00, 0x00, 0x00] (e.g., version 1.0.0.0)
 
 If there's no response within the specified time window, the sender
 should retry sending the request. If the receiver cannot process the
